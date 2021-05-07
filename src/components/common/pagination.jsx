@@ -10,6 +10,7 @@ const Pagination = ({itemsCount, pageSize, currentPage, onPageChange}) => {
 	}
 	const pages = _.range(1, pagesCount + 1);
 
+
 	return (
 		<nav>
 			<ul className="pagination pagination-sm">
