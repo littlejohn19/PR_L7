@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+const axios = require('axios');
 
 class LoginForm extends Component {
 
@@ -9,6 +9,10 @@ class LoginForm extends Component {
            username: "", password: ""
        },
        errors: {}
+   };
+
+    handleChangeRoute = () => {
+       this.props.history.push('/');
    };
 
 
@@ -29,6 +33,25 @@ class LoginForm extends Component {
 
     handleSubmit = (event) => {
    event.preventDefault();
+
+     axios({
+           method: 'post',
+           url: 'http://localhost:3001/api/user/auth',
+           data: {
+               login: this.state.account.username,
+               password: this.state.account.password           }
+       }).then((response) => {
+           localStorage.setItem('token', response.data.token);
+           this.handleChangeRoute();
+       }).catch((error) => {
+         const errors = {};
+           errors.password = 'Given username does\'t exists or password is wrong!';
+           this.setState({errors: errors || {}});
+           console.log(error);
+       });
+
+
+
 
 
      const errors = this.validate();
